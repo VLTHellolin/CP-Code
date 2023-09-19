@@ -1,0 +1,9 @@
+[submodule "ac-library"]
+	path = ac-library
+	url = https://github.com/atcoder/ac-library
+[submodule "hellolin-library"]
+	path = hellolin-library
+	url = https://github.com/hellolin-oi/hellolin-library
+[submodule "testlib"]
+	path = testlib
+	url = https://github.com/MikeMirzayanov/testlib
