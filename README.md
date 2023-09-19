@@ -1,3 +1,6 @@
+> [!NOTE]
+> 由于我将 WSL1 升级到了 WSL2，本地 git 存储库出现了一些问题。2023/09/19 之前的所有提交均被删除。
+
 <div align="center">
 
 # CP-Code
@@ -43,39 +46,20 @@ git submodule update --init --recursive --depth=1 # 处理子模块
 
 ### 操作系统
 
-**2023/08/29 之前**
-
-| 名称  | 信息   |
-| ----: | :---- |
-| 系统版本 | `Windows 11 Pro for Workstations Insider Preview 22H2` |
-| 内核版本 | `10.0.23531` |
-
-**2023/08/29 之后**
-
 | 名称  | 信息   |
 | ----: | :---- |
 | 系统版本 | `Ubuntu 22.04.3 LTS on Windows 10 x86_64` |
-| 内核版本 | `4.4.0-23531-Microsoft` |
+| 内核版本 | `5.15.90.4-microsoft-standard-WSL2` |
 
 ### 语言环境
 
 以下，代码文件名默认为 `main.ext`，`ext` 是对应语言要求的拓展名。
 
-**2023/08/29 之前**
-
-| 名称 | 编译器/解释器版本 | 编译指令 | 运行指令 |
-| ----: | :----------- | :------ | :------ |
-| C | `gcc.exe (MinGW-W64 x86_64-ucrt-mcf-seh, built by Brecht Sanders) 13.2.0` | `gcc main.c -std=gnu2x -lm -O2 -DDEBUG -DLOCAL -o main` | `./main.exe` |
-| C++(gcc) | `g++.exe (MinGW-W64 x86_64-ucrt-mcf-seh, built by Brecht Sanders) 13.2.0` | `g++ main.cpp -std=gnu++20 -lm -O2 -DDEBUG -DLOCAL -Wall -Wextra -mtune=native -march=native -fconstexpr-depth=2147483647 -Wl,--stack=2147483647 -o main` | `./main.exe` |
-| C++(clang) | `(built by Brecht Sanders) clang version 16.0.6` | `clang++ main.cpp -std=gnu++20 -lm -O2 -DDEBUG -DLOCAL -Wall -Wextra -mtune=native -march=native -fconstexpr-depth=2147483647 -Wl,--stack=2147483647 -fuse-ld=lld -Wno-unknown-pragmas -o main` | `./main.exe` |
-
-**2023/08/29 之后**
-
-| 名称 | 编译器/解释器版本 | 编译指令 | 运行指令 |
-| ----: | :----------- | :------ | :------ |
-| C | `gcc-12 (Ubuntu 12.3.0-1ubuntu1~22.04) 12.3.0` | `gcc-12 main.c -std=gnu2x -lm -O2 -DLOCAL -o main` | `./main` |
-| C++ | `Ubuntu clang version 15.0.7` | `clang++-15 main.cpp -std=gnu++20 -stdlib=libstdc++ -O2 -DLOCAL -Wall -Wextra -mtune=native -march=native -fconstexpr-depth=2147483647 -Wl,--stack=2147483647 -lm -fno-asm -ffast-math -fuse-ld=lld -Wno-unknown-pragmas -o main` | `./main` |
-| Java | `openjdk 17.0.8 2023-07-18 LTS` | `javac main.java` | `java -DLOCAL=true main` |
-| NodeJS | `v18.17.1` |  | `node main.js` |
-| Python | `Python 3.10.12` | `python3 -m py_compile main.py` | `python3 main.py` |
-| Lua | `Lua 5.4.4` | `luac main.lua -o main` | `lua main` |
+| 名称 | ccache 版本 | 编译器/解释器版本 | 编译指令 | 运行指令 |
+| ----: | :-------- | :----------- | :------ | :------ |
+| C | `ccache version 4.5.1` | `gcc-12 (Ubuntu 12.3.0-1ubuntu1~22.04) 12.3.0` | `ccache gcc-12 main.c -std=gnu2x -lm -O2 -DLOCAL -o main` | `./main` |
+| C++ | `ccache version 4.5.1` | `Ubuntu clang version 15.0.7` | `ccache clang++-15 main.cpp -std=gnu++20 -stdlib=libstdc++ -O2 -DLOCAL -Wall -Wextra -mtune=native -march=native -fconstexpr-depth=2147483647 -Wl,--stack=2147483647 -lm -fno-asm -ffast-math -fuse-ld=lld -o main` | `./main` |
+| Java | \ | `openjdk 17.0.8 2023-07-18 LTS` | `javac main.java` | `java -DLOCAL=true main` |
+| NodeJS | \ | `v18.17.1` |  | `node main.js` |
+| Python | \ | `Python 3.10.12` | `python3 -m py_compile main.py` | `python3 main.py` |
+| Lua | \ | `Lua 5.4.4` | `luac main.lua -o main` | `lua main` |
