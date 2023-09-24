@@ -1,5 +1,0 @@
-#pragma once
-
-#include "hash"
-#include "lyndon"
-#include "suffix_array"
