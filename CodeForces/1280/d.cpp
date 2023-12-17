@@ -1,122 +1,108 @@
-// * HELLOLIN'S CP CODE TEMPLATE v2.5.0
-#ifndef ONLINE_JUDGE
-#pragma GCC optimize(2, "inline", "unroll-loops", "no-stack-protector", "-ffast-math")
-#endif
-#define _EXT_CODECVT_SPECIALIZATIONS_H 0
-#define _EXT_ENC_FILEBUF_H 0
-#include <bits/extc++.h>
+/**
+ * @file Hellolin's Code Template
+ * @version 4.3.1
+ */
+// *INDENT-OFF*
+// NOLINTBEGIN
+// clang-format off
+#include <bits/stdc++.h>
 #ifdef LOCAL
-#include <windows.h>
-#include <psapi.h>
+#include "hellolin/a/debug_tools.hpp"
 #endif
-
+using namespace std;
 namespace hellolin {
-namespace lib {
-using ll = long long;
-using ull = unsigned long long;
-using lll = __int128;
-using ulll = __uint128_t;
-const static std::string yesno_str[2][3] = {{"no", "No", "NO"}, {"yes", "Yes", "YES"}};
-inline std::string yesno(bool x, int y) { return yesno_str[x][y] + '\n'; }
-template <class T> inline T fpow(T x, ull y) { T res = 1; for(; y; y >>= 1, x = x * x) if(y & 1) res = res * x; return res; }
-template <class T> inline T fpow(T x, ull y, T mod) { T res = 1; for(; y; y >>= 1, x = x * x % mod) if(y & 1) res = res * x % mod; return res; }
-template <class T, class U> inline bool chmax(T &x, U y) { return y > x ? (x = y, 1) : 0; }
-template <class T, class U> inline bool chmin(T &x, U y) { return y < x ? (x = y, 1) : 0; }
-#define rep(l, x, a, b) for (l x = a, x##END = b; x <= x##END; ++x)
-#define per(l, x, a, b) for (l x = a, x##END = b; x >= x##END; --x)
-#define fi first
-#define se second
-#define allof(x) x.begin(), x.end()
-#define alof(x) x.begin() + 1, x.end()
-#define allnof(x, n) x.begin(), x.begin() + n + 1
-#define alnof(x, n) x.begin() + 1, x.begin() + n + 2
-#define lowbit(x) (x & -x)
-#define mp make_pair
-#define pb emplace_back
-#define nl '\n'
-} // namespace lib
-using namespace lib;
-
-// * CORE CODE BEGIN * //
-constexpr static int N = 3e3+114;
-int T, n, m;
-int b[N], w[N], u, v;
-std::vector<std::vector<int>> g;
-int dp[N][N];
-ll q[N][N], len[N];
-std::pair<int, ll> tr[N];
-void solve() {
-    auto dfs = [&](auto fun, int x, int fa) -> void {
-        len[x] = 1;
-        q[x][1] = w[x];
-        rep(int, i, 2, n) dp[x][i] = q[x][i] = -1;
-        dp[x][1] = 0;
-        for(auto y : g[x]) {
-            if(y != fa) {
-                fun(fun, y, x);
-                rep(int, i, 1, std::min((ll)m, len[x] + len[y])) tr[i] = {-1, -1};
-                rep(int, i, 1, len[x])
-                    rep(int, j, 1, len[y]) {
-                        int k = i + j;
-                        if(k > m) break;
-                        int p = dp[x][i] + dp[y][j], pp = q[x][i] = q[y][j];
-                        if(p > tr[k].fi) {
-                            tr[k] = {p, pp};
-                        } else if(p == tr[k].fi) {
-                            chmax(tr[k].se, pp);
-                        }
-                    }
-                rep(int, i, 1, std::min((ll)m, len[x] + len[y])) std::tie(dp[x][i], q[x][i]) = tr[i];
-                len[x] += len[y];
-            }
-        }
-        per(int, i, std::min((ll)m, len[x]), 1) {
-            ll tp = dp[x][i] + (q[x][i] > 0);
-            if(chmax(dp[x][i+1], tp))
-                q[x][i+1] = 0;
-            else if(dp[x][i+1] == tp && q[x][i+1] < 0)
-                q[x][i+1] = 0;
-        }
-    };
-    for(std::cin >> T; T--; ) {
-        std::cin >> n >> m;
-        g = std::vector<std::vector<int>> (n+1, std::vector<int> ());
-        rep(int, i, 1, n) std::cin >> b[i];
-        rep(int, i, 1, n) {
-            std::cin >> w[i];
-            w[i] -= b[i];
-        }
-        rep(int, i, 1, n-1) {
-            std::cin >> u >> v;
-            g[u].pb(v), g[v].pb(u);
-        }
-        dfs(dfs, 1, 0);
-        std::cout << dp[1][m] + (q[1][m] > 0) << nl;
-    }
-}
-// * CORE CODE END * //
-
+using ll = long long; using ull = unsigned long long; using cp = complex<double>;
+#define rangeOf(x) x.begin(), x.end()
+class hellolinUtility {
+mt19937 _m_r;
+public:hellolinUtility():_m_r(chrono::duration_cast<chrono::nanoseconds>(chrono::system_clock::now().time_since_epoch()).count()){};template<class T>T random(T l,T r){uniform_int_distribution<T>d(l, r);return d(_m_r);}
+template<class T,class F>bool chmax(T&x,F y){return y>x?x=y,1:0;}template<class T,class F>bool chmin(T&x,F y){return y<x?x=y,1:0;}template<class T>T pow(T x,ll y,ll m){T s=1;for(;y;y>>=1,(x*=x)%=m)(y&1)&&((s*=x)%=m);return s;}template<class T>T inv(T x,ll m){return pow(x,m-2,m);}template<class T>T pow(T x,ll y){T s=1;for(;y;y>>=1,x*=x)(y&1)&&(s*=x);return s;}
+template<class T=int>T reads(istream&i){T x;i>>x;return x;}template<class T>void reads(istream&i,T&x){i>>x;}template<class T,class...A>void reads(istream&i,T&x,A&&...y){i>>x;reads(i,y...);}template<class T=int>T read(){return reads<T>(cin);}template<class...A>void read(A&&...x){reads(cin,x...);}template<class T>void writes(ostream&o,T x){o<<x;}template<class T,class...A>void writes(ostream&o,const T&x,A...y){o<<x;writes(o,y...);}template<class...A>void writesln(ostream&o,A...x){writes(o,x...,'\n');}template<class...A>void write(A...x){writes(cout,x...);}template<class...A>void writeln(A...x){writesln(cout,x...);}template<class T>void reads_arr(istream&i,T x,T y){while(x!=y)reads(i,*(x++));}template<class T>void writes_arr(ostream&o,T x,T y,char a=' ',char b='\n'){while(x!=y){writes(o,*(x++));writes(o,x==y?b:a);}}template<class T>void read_arr(T x,T y){reads_arr(cin,x,y);}template<class T>void write_arr(T x,T y,char a=' ',char b='\n'){writes_arr(cout,x,y,a,b);}
+} util;
+template<class T,ll m> struct modInt {
+T x;modInt():x(0){}modInt(T _x):x(_x){x%=m,x<0&&(x+=m);}friend istream&operator>>(istream&i,modInt&x){return i>>x.x;}friend ostream& operator<<(ostream&o,const modInt&x){return o<<x.x;}template<class F>operator F(){return x;}ll mod(){return m;}friend modInt operator+(modInt a,modInt b){return((a.x+=b.x)>=m&&(a.x-=m)),a;}friend modInt operator-(modInt a,modInt b){return((a.x-=b.x)<0&&(a.x+=m)),a;}friend modInt operator*(modInt a,modInt b){return a.x*b.x%m;}friend modInt operator/(modInt a,modInt b){return a.x*util.inv(b.x,m)%m;}friend modInt operator%(modInt a,modInt b){return a.x%m;}modInt&operator%=(modInt b){return*this=*this%b;}modInt&operator+=(modInt b){return*this=*this+b;}modInt&operator-=(modInt b){return*this=*this-b;}modInt&operator*=(modInt b){return*this=*this*b;}modInt&operator/=(modInt b){return*this=*this/b;}modInt&operator++(){return*this+=1;}modInt&operator++(int){auto a=*this;return*this+=1,a;}modInt&operator--(){return*this-=1;}modInt&operator--(int){auto a=*this;return*this-=1,a;}modInt pow(T y){return modInt<T,m>(util.pow(x,y,m));}modInt inv(){return modInt<T,m>(util.inv(x,m));}
+};
+void main();
 } // namespace hellolin
-
 int main() {
     // freopen(".in", "r", stdin);
     // freopen(".out", "w", stdout);
-    // freopen(".dbg", "w", stderr);
-#ifdef LOCAL
-    auto st = std::chrono::high_resolution_clock::now();
-#endif
-    std::ios::sync_with_stdio(false);
-    std::cin.tie(nullptr), std::cout.tie(nullptr);
-    // std::cout << std::fixed << std::setprecision(6);
-    std::cerr << std::fixed << std::setprecision(6);
-    hellolin::solve();
-#ifdef LOCAL
-    auto ed = std::chrono::high_resolution_clock::now();
-    PROCESS_MEMORY_COUNTERS pmc;
-    GetProcessMemoryInfo(GetCurrentProcess(), &pmc, sizeof(pmc));
-    std::cerr << "---------- DEBUG INFO ----------\n";
-    std::cerr << "Time: " << std::chrono::duration_cast<std::chrono::nanoseconds>(ed - st).count() * 1e-9 << "s.\n";
-    std::cerr << "Memory: " << pmc.WorkingSetSize / 1000000 << "MB.\n";
-#endif
-    return 0;
+    cin.tie(nullptr)->sync_with_stdio(false);
+    hellolin::main();
 }
+// NOLINTEND
+// clang-format on
+
+namespace hellolin {
+#pragma GCC optimize(3, "Ofast", "unroll-loops")
+constexpr static int N = 3090;
+constexpr static ll Inf = 8e18;
+int n, m;
+int b[N], w[N], sz[N];
+// vector<vector<int>> g;
+// vector<vector<ll>> f1, f2;
+// vector<ll> c1, c2;
+vector<vector<int>> g;
+ll f1[N][N], f2[N][N];
+ll c1[N], c2[N];
+void dfs(int x, int f) {
+    f2[x][1] = w[x] - b[x];
+    sz[x] = 1;
+    for (const auto &y : g[x]) {
+        if (y == f) continue;
+        dfs(y, x);
+        for (int i = 1; i <= sz[x]; ++i) {
+            for (int j = 1; j <= sz[y]; ++j) {
+                ll val = f1[x][i] + f1[y][j];
+                int cur = i + j;
+
+                val += f2[y][j] > 0;
+                if (val > c1[cur]) {
+                    c1[cur] = val;
+                    c2[cur] = f2[x][i];
+                }
+                if (val == c1[cur]) {
+                    util.chmax(c2[cur], f2[x][i]);
+                }
+
+                --cur;
+                val -= f2[y][j] > 0;
+                if (val > c1[cur]) {
+                    c1[cur] = val;
+                    c2[cur] = f2[x][i] + f2[y][j];
+                }
+                if (val == c1[cur]) {
+                    util.chmax(c2[cur], f2[x][i] + f2[y][j]);
+                }
+            }
+        }
+        for (int i = 1; i <= sz[x] + sz[y]; ++i) {
+            f1[x][i] = c1[i];
+            f2[x][i] = c2[i];
+            c1[i] = 0;
+            c2[i] = -Inf;
+        }
+        sz[x] += sz[y];
+    }
+}
+void main() {
+    for (int T = util.read(); T--;) {
+        util.read(n, m);
+        util.read_arr(&b[1], &b[n + 1]);
+        util.read_arr(&w[1], &w[n + 1]);
+        g = vector<vector<int>>(n + 1);
+        for (int i = 2; i <= n; ++i) {
+            int u, v;
+            util.read(u, v);
+            g[u].push_back(v), g[v].push_back(u);
+        }
+        for (int i = 0; i < N; ++i)
+            c1[i] = 0, c2[i] = -Inf;
+        for (int i = 0; i < N; ++i)
+            for (int j = 0; j < N; ++j)
+                f1[i][j] = 0, f2[i][j] = -Inf;
+        dfs(1, 0);
+        util.writeln((f2[1][m] > 0) + f1[1][m]);
+    }
+}
+} // namespace hellolin
