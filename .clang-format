@@ -1,6 +1,6 @@
 ---
 BasedOnStyle: LLVM
-AccessModifierOffset: -4
+AccessModifierOffset: -2
 Language: Cpp
 Standard: c++20
 ColumnLimit: 0
@@ -24,10 +24,10 @@ BraceWrapping:
   SplitEmptyRecord: true
   SplitEmptyNamespace: true
 PointerAlignment: Right
-IndentWidth: 4
+IndentWidth: 2
 MaxEmptyLinesToKeep: 1
 ObjCSpaceAfterProperty: true
-ObjCBlockIndentWidth: 4
+ObjCBlockIndentWidth: 2
 AllowShortFunctionsOnASingleLine: true
 AllowShortIfStatementsOnASingleLine: true
 AlignTrailingComments: true
@@ -42,7 +42,7 @@ KeepEmptyLinesAtTheStartOfBlocks: true
 BreakConstructorInitializersBeforeComma: true
 AllowAllParametersOfDeclarationOnNextLine: true
 SpaceAfterCStyleCast: true
-TabWidth: 4
+TabWidth: 2
 UseTab: Never
 ...
 

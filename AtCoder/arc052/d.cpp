@@ -20,23 +20,38 @@ int main() {
 // clang-format on
 
 namespace hellolin {
-static constexpr int N = 1e4 + 11, M = 998244353, P = 2048;
-ll f[60][N * 2], ans, k;
-int n, a[N];
+static constexpr int N = 1e4 + 1;
+ll n, m, a[12];
+ll f[12][90][N][2];
+ll dfs(int tot, int sum = 0, int ksum = 0, bool ok = true) {
+  if (!tot) return sum && ksum == sum % n;
+  auto &now = f[tot][sum][ksum][ok];
+  if (~now) return now;
+  now = 0;
+  int cur = ok ? a[tot] : 9;
+  --tot;
+  for (int i = 0; i <= cur; ++i)
+    now += dfs(tot, sum + i, (ksum * 10 + i) % n, ok && i == cur);
+  return now;
+}
 void main() {
-  f[0][0] = 1;
-  read(n, k);
-  read_n(a+1, n);
-  for(int i=0; i<=53; ++i) {
-    if((k >> i) & 1) {
-      for(int p=1; p<=n; ++p)
-        for(int j=0; j<P; ++j)
-          
-    } else {
-      for(int j=0; j<P; ++j) {
-        f[i + 1][j >> 1] ^= f[i][j];
-      }
+  read(n, m);
+  memset(f, -1, sizeof(f));
+  if (n <= 1e4) {
+    int k = 0;
+    while (m)
+      a[++k] = m % 10, m /= 10;
+    return println(dfs(k));
+  }
+  ll ans = -1;
+  for (ll i = 0; i <= 90; ++i) {
+    for (ll j = i; j <= m; j += n) {
+      ll J = j, js = 0;
+      while (J)
+        js += J % 10, J /= 10;
+      ans += i == js % n;
     }
   }
+  println(ans);
 }
 } // namespace hellolin

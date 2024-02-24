@@ -20,23 +20,40 @@ int main() {
 // clang-format on
 
 namespace hellolin {
-static constexpr int N = 1e4 + 11, M = 998244353, P = 2048;
-ll f[60][N * 2], ans, k;
-int n, a[N];
+static constexpr int N = 1e6 + 11;
+int n, m, a[N];
+int f[N], x, y, ans;
+string s;
+vector<int> r[N];
+int find(int x) { return f[x] == x ? x : f[x] = find(f[x]); }
 void main() {
-  f[0][0] = 1;
-  read(n, k);
-  read_n(a+1, n);
-  for(int i=0; i<=53; ++i) {
-    if((k >> i) & 1) {
-      for(int p=1; p<=n; ++p)
-        for(int j=0; j<P; ++j)
-          
-    } else {
-      for(int j=0; j<P; ++j) {
-        f[i + 1][j >> 1] ^= f[i][j];
-      }
+  read(n, s);
+  s = '#' + s;
+  for (int i = 1; i <= n + 1; ++i)
+    f[i] = i;
+  int cur = n;
+  for (int i = n; i >= 1; --i) {
+    if (s[i] == '0') ++x;
+    if (s[i] == '1') ++y;
+    while (x && y) {
+      if (s[cur] == '0') --x;
+      if (s[cur] == '1') --y;
+      --cur;
     }
+    r[a[i] = cur - i + 1].push_back(i);
   }
+  for (int i = 1; i <= n; ++i) {
+    for (const auto &x : r[i - 1])
+      f[x] = x + 1;
+
+    int k = 1;
+    ans = 0;
+    for (; k <= n; k += i, ++ans) {
+      k = find(k);
+      if (k > n) break;
+    }
+    print(ans, ' ');
+  }
+  print('\n');
 }
 } // namespace hellolin

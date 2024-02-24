@@ -20,23 +20,27 @@ int main() {
 // clang-format on
 
 namespace hellolin {
-static constexpr int N = 1e4 + 11, M = 998244353, P = 2048;
-ll f[60][N * 2], ans, k;
-int n, a[N];
+static constexpr int N = 2e5 + 11, M = 4e5 + 11, lN = 22;
+int T;
+int n, m;
+int q, s, all;
+bool k, vis[N];
+ll lastans;
+void dij(int s) {
+  
+}
 void main() {
-  f[0][0] = 1;
-  read(n, k);
-  read_n(a+1, n);
-  for(int i=0; i<=53; ++i) {
-    if((k >> i) & 1) {
-      for(int p=1; p<=n; ++p)
-        for(int j=0; j<P; ++j)
-          
-    } else {
-      for(int j=0; j<P; ++j) {
-        f[i + 1][j >> 1] ^= f[i][j];
-      }
+  for (read(T); T--; [&]() {
+    read(n, m);
+    for(int i=1; i<=m; ++i) {
+      int u, v, l, a;
+      read(u, v, l, a);
     }
-  }
+    read(q, k, s);
+    for(int i=1; i<=q; ++i) {
+      int v, p;
+      read(v, p);
+    }
+  }());
 }
 } // namespace hellolin

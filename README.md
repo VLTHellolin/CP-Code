@@ -31,7 +31,7 @@
 ## 使用指南
 
 ``` bash
-git clone --depth=1 https://github.com/hellolin-oi/CP-Code # 克隆存储库
+git clone --depth=1 https://github.com/VLTHellolin/CP-Code # 克隆存储库
 cd CP-Code # 进入存储库目录
 git submodule update --init --recursive --depth=1 # 处理子模块
 ```

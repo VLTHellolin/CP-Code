@@ -20,23 +20,32 @@ int main() {
 // clang-format on
 
 namespace hellolin {
-static constexpr int N = 1e4 + 11, M = 998244353, P = 2048;
-ll f[60][N * 2], ans, k;
-int n, a[N];
+static constexpr int M = 2e5;
+static constexpr ll Mod = 998244353;
+ll fc[M + 5];
+unordered_map<ll, ll> mp;
+ll dfs(ll n) {
+  if (n <= M) return fc[n];
+  if (mp.find(n) != mp.end()) return mp[n];
+
+  ll ans = 1, l = 2, r;
+
+  for (; l <= n; l = r + 1)
+    (ans += dfs(n / l) * ((r = n / (n / l)) - l + 1)) %= Mod;
+
+  return mp[n] = ans;
+}
 void main() {
-  f[0][0] = 1;
-  read(n, k);
-  read_n(a+1, n);
-  for(int i=0; i<=53; ++i) {
-    if((k >> i) & 1) {
-      for(int p=1; p<=n; ++p)
-        for(int j=0; j<P; ++j)
-          
-    } else {
-      for(int j=0; j<P; ++j) {
-        f[i + 1][j >> 1] ^= f[i][j];
-      }
-    }
-  }
+  fc[1] = 1;
+  for (int i = 1; i <= M; ++i)
+    for (int j = i << 1; j <= M; j += i)
+      (fc[j] += fc[i]) %= Mod;
+
+  for (int i = 2; i <= M; ++i)
+    (fc[i] += fc[i - 1]) %= Mod;
+
+  ll n;
+  read(n);
+  println(dfs(n));
 }
 } // namespace hellolin
